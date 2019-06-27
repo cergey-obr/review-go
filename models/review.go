@@ -22,6 +22,10 @@ type Review struct {
 	Style     int      `orm:"null"`
 }
 
+func init() {
+	orm.RegisterModel(new(Review))
+}
+
 func GetAll() []*Review {
 	o := orm.NewOrm()
 	var review []*Review
