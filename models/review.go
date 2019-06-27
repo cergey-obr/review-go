@@ -1,25 +1,37 @@
 package models
 
-var (
-	ReviewList map[string]*Review
+import (
+	"fmt"
+	"github.com/astaxie/beego/orm"
 )
 
-func init() {
-	ReviewList = make(map[string]*Review)
-	u := Review{"user_11111", "bob", "11111"}
-	ReviewList["user_11111"] = &u
-}
-
 type Review struct {
-	Id       string
-	Username string
-	Password string
+	Id        int               `orm:"auto;pk"`
+	ProductId int               `orm:"index"`
+	StatusId  int               `orm:"default(2)"`
+	CreatedAt orm.DateTimeField `orm:"null,default(set_null)"`
+	Title     string            `orm:"size(256)"`
+	Author    *Author           `orm:"rel(fk)"`
+	Detail    string
+	Recommend bool `orm:"null"`
+	Website   int
+	Photo     []*Photo `orm:"reverse(many)"`
+	Overall   int      `orm:"null"`
+	Quality   int      `orm:"null"`
+	Fit       int      `orm:"null"`
+	Style     int      `orm:"null"`
 }
 
-func GetAllReviews() map[string]*Review {
-	return ReviewList
+func GetAll() []*Review {
+	o := orm.NewOrm()
+	var review []*Review
+	num, err := o.QueryTable("review").All(&review)
+	fmt.Printf("Returned Rows Num: %s, %s", num, err)
+
+	return review
 }
 
-func GetProductReviews() map[string]*Review {
-	return ReviewList
+func GetProductReviews() []*Review {
+	var review []*Review
+	return review
 }

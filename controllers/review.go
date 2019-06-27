@@ -19,7 +19,7 @@ type ReviewController struct {
 // @Success 200 {object} models.Review
 // @router / [get]
 func (r *ReviewController) GetAll() {
-	reviews := models.GetAllReviews()
+	reviews := models.GetAll()
 
 	filters := r.GetStrings("filter[]")
 	orders := r.GetStrings("order[]")
