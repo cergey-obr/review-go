@@ -1,6 +1,5 @@
 package models
 
-<<<<<<<<< Temporary merge branch 1
 import (
 	"fmt"
 	"github.com/astaxie/beego/orm"
@@ -27,7 +26,8 @@ func init() {
 	orm.RegisterModel(new(Review))
 }
 
-func GetAll() []*Review {
+func GetAll(offset int, limit int) []*Review {
+	reviews := []*Review{}
 	o := orm.NewOrm()
 	queryBuilder := o.QueryTable(Review{})
 	queryBuilder = addLimit(queryBuilder, limit)
