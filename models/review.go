@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"github.com/astaxie/beego/orm"
 )
 
@@ -29,15 +28,28 @@ func init() {
 func GetAll(offset int, limit int) []*Review {
 	reviews := []*Review{}
 	o := orm.NewOrm()
-	queryBuilder := o.QueryTable(Review{})
-	queryBuilder = addLimit(queryBuilder, limit)
-	queryBuilder = addOffset(queryBuilder, offset)
-	num, _ := queryBuilder.All(&reviews)
+	queryReviewBuilder := o.QueryTable(Review{})
+	queryReviewBuilder = addLimit(queryReviewBuilder, 1000)
+	//queryBuilder = addOffset(queryBuilder, offset)
+	queryReviewBuilder.All(&reviews)
 
-	fmt.Println(num)
+	photos := []*Photo{}
+	oP := orm.NewOrm()
+	queryPhotoBuilder := oP.QueryTable(Photo{})
+	cond := orm.NewCondition()
+	for _, review := range reviews {
+		cond = cond.Or("review__id", review.Id)
+	}
 
-	for _, el := range reviews {
-		o.LoadRelated(el, "Photo", 0)
+	queryPhotoBuilder.SetCond(cond).All(&photos)
+
+	for _, review := range reviews {
+		for _, photo := range photos {
+			if photo.Review.Id == review.Id {
+				review.Photo = append(review.Photo, photo)
+				continue
+			}
+		}
 	}
 
 	return reviews
