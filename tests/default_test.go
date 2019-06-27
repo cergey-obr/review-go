@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"path/filepath"
-	_ "review/routers"
+	_ "review-go/routers"
 	"runtime"
 	"testing"
 

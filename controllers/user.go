@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
-	"review/models"
+	"review-go/models"
 
 	"github.com/astaxie/beego"
 )

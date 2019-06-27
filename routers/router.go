@@ -9,7 +9,7 @@ package routers
 
 import (
 	"github.com/astaxie/beego"
-	"review/controllers"
+	"review-go/controllers"
 )
 
 func init() {
