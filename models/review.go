@@ -1,5 +1,6 @@
 package models
 
+<<<<<<<<< Temporary merge branch 1
 import (
 	"fmt"
 	"github.com/astaxie/beego/orm"
@@ -22,8 +23,11 @@ type Review struct {
 	Style     int      `orm:"null"`
 }
 
-func GetAllReviews(offset int, limit int) []*Review {
-	var reviews []*Review
+func init() {
+	orm.RegisterModel(new(Review))
+}
+
+func GetAll() []*Review {
 	o := orm.NewOrm()
 	queryBuilder := o.QueryTable(Review{})
 	queryBuilder = addLimit(queryBuilder, limit)
@@ -52,3 +56,8 @@ func addOffset(o orm.QuerySeter, offset int) orm.QuerySeter {
 //
 //	return ReviewList
 //}
+
+func GetProductReviews() []*Review {
+	var review []*Review
+	return review
+}
