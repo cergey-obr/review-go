@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"github.com/astaxie/beego/orm"
 )
 
@@ -21,13 +22,31 @@ type Review struct {
 	Style     int      `orm:"null"`
 }
 
-func GetAllReviews() []*Review {
+func GetAllReviews(offset int, limit int) []*Review {
 	var reviews []*Review
 	o := orm.NewOrm()
-	o.QueryTable(Review{}).Limit(1000).All(&reviews)
+	queryBuilder := o.QueryTable(Review{})
+	queryBuilder = addLimit(queryBuilder, limit)
+	queryBuilder = addOffset(queryBuilder, offset)
+	num, _ := queryBuilder.All(&reviews)
+
+	fmt.Println(num)
 
 	return reviews
 }
+
+func addLimit(o orm.QuerySeter, limit int) orm.QuerySeter {
+	return o.Limit(limit)
+}
+
+func addOffset(o orm.QuerySeter, offset int) orm.QuerySeter {
+	return o.Offset(offset)
+}
+
+//func addFilter(o orm.QuerySeter, filter int) orm.QuerySeter {
+//
+//	return o
+//}
 
 //func GetProductReviews() map[string]*Review {
 //
