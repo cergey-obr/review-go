@@ -36,6 +36,10 @@ func GetAll(offset int, limit int) []*Review {
 
 	fmt.Println(num)
 
+	for _, el := range reviews {
+		o.LoadRelated(el, "Photo", false, 0)
+	}
+
 	return reviews
 }
 
