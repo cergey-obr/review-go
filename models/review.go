@@ -15,7 +15,7 @@ type Review struct {
 	Detail    string
 	Recommend bool `orm:"null"`
 	Website   int
-	Photo     []*Photo `orm:"reverse(many)"`
+	Photos    []*Photo `orm:"reverse(many)"`
 	Overall   int      `orm:"null"`
 	Quality   int      `orm:"null"`
 	Fit       int      `orm:"null"`
@@ -35,6 +35,10 @@ func GetAll(offset int, limit int) []*Review {
 	num, _ := queryBuilder.All(&reviews)
 
 	fmt.Println(num)
+
+	for _, el := range reviews {
+		o.LoadRelated(el, "Photos", 0)
+	}
 
 	return reviews
 }
