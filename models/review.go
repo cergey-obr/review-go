@@ -22,11 +22,10 @@ type Review struct {
 	Style     int      `orm:"null"`
 }
 
-func GetAll() string {
-	o := orm.NewOrm()
-	var review []*Review
-	num, err := o.QueryTable("review").All(&review)
-	fmt.Printf("Returned Rows Num: %s, %s", num, err)
+func GetAllReviews() map[string]*Review {
+	return ReviewList
+}
 
-	return "test"
+func GetProductReviews() map[string]*Review {
+	return ReviewList
 }
