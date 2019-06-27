@@ -26,14 +26,36 @@ func init() {
 	orm.RegisterModel(new(Review))
 }
 
-func GetAll() []*Review {
+func GetAll(offset int, limit int) []*Review {
+	reviews := []*Review{}
 	o := orm.NewOrm()
-	var review []*Review
-	num, err := o.QueryTable("review").All(&review)
-	fmt.Printf("Returned Rows Num: %s, %s", num, err)
+	queryBuilder := o.QueryTable(Review{})
+	queryBuilder = addLimit(queryBuilder, limit)
+	queryBuilder = addOffset(queryBuilder, offset)
+	num, _ := queryBuilder.All(&reviews)
 
-	return review
+	fmt.Println(num)
+
+	return reviews
 }
+
+func addLimit(o orm.QuerySeter, limit int) orm.QuerySeter {
+	return o.Limit(limit)
+}
+
+func addOffset(o orm.QuerySeter, offset int) orm.QuerySeter {
+	return o.Offset(offset)
+}
+
+//func addFilter(o orm.QuerySeter, filter int) orm.QuerySeter {
+//
+//	return o
+//}
+
+//func GetProductReviews() map[string]*Review {
+//
+//	return ReviewList
+//}
 
 func GetProductReviews() []*Review {
 	var review []*Review

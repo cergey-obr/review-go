@@ -19,8 +19,6 @@ type ReviewController struct {
 // @Success 200 {object} models.Review
 // @router / [get]
 func (r *ReviewController) GetAll() {
-	reviews := models.GetAll()
-
 	filters := r.GetStrings("filter[]")
 	orders := r.GetStrings("order[]")
 	limit, _ := r.GetInt("limit", 100)
@@ -28,20 +26,7 @@ func (r *ReviewController) GetAll() {
 
 	fmt.Println("params ", filters, orders, limit, offset)
 
-	r.Data["json"] = reviews
-	r.ServeJSON()
-}
-
-// @Description Get reviews by product id
-// @Param productId query []int "Array of product id"
-// @Param filter query []string "Filter criterion"
-// @Param order query []string "Order criterion"
-// @Param limit query int 100 "Limit"
-// @Param offset query int 0 "Offset"
-// @Success 200 {string} login success
-// @router /product [get]
-func (r *ReviewController) GetProductReviews() {
-	reviews := models.GetProductReviews()
+	reviews := models.GetAll(offset, limit)
 
 	r.Data["json"] = reviews
 	r.ServeJSON()
