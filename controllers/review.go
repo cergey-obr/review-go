@@ -32,17 +32,17 @@ func (r *ReviewController) GetAll() {
 	r.ServeJSON()
 }
 
-// @Description Get reviews by product id
-// @Param productId query []int "Array of product id"
-// @Param filter query []string "Filter criterion"
-// @Param order query []string "Order criterion"
-// @Param limit query int 100 "Limit"
-// @Param offset query int 0 "Offset"
-// @Success 200 {string} login success
-// @router /product [get]
-func (r *ReviewController) GetProductReviews() {
-	reviews := models.GetProductReviews()
-
-	r.Data["json"] = reviews
-	r.ServeJSON()
-}
+//// @Description Get reviews by product id
+//// @Param productId query []int "Array of product id"
+//// @Param filter query []string "Filter criterion"
+//// @Param order query []string "Order criterion"
+//// @Param limit query int 100 "Limit"
+//// @Param offset query int 0 "Offset"
+//// @Success 200 {string} login success
+//// @router /product [get]
+//func (r *ReviewController) GetProductReviews() {
+//	reviews := models.GetProductReviews()
+//
+//	r.Data["json"] = reviews
+//	r.ServeJSON()
+//}
