@@ -13,17 +13,17 @@ import (
 )
 
 func init() {
-	ns := beego.NewNamespace("/v1",
-		beego.NSNamespace("/object",
-			beego.NSInclude(
-				&controllers.ObjectController{},
-			),
-		),
-		beego.NSNamespace("/user",
-			beego.NSInclude(
-				&controllers.UserController{},
-			),
+	reviewNS := beego.NewNamespace("/:website([0-9]+)/review",
+		beego.NSInclude(
+			&controllers.ReviewController{},
 		),
 	)
-	beego.AddNamespace(ns)
+
+	photoNS := beego.NewNamespace("/photo",
+		beego.NSInclude(
+			&controllers.ReviewController{},
+		),
+	)
+
+	beego.AddNamespace(reviewNS, photoNS)
 }

@@ -13,3 +13,5 @@
 
 .idea
 *.tmp
+routers/commentsRouter_controllers.go
+review-go
